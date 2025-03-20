@@ -4,15 +4,6 @@ import Navbar from '@/components/Navbar';
 import ChartCard from '@/components/ChartCard';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const CHART_IMAGES = {
-  temperature: "https://images.unsplash.com/photo-1501621667575-af81f1f0bacc?q=80&w=1170&auto=format&fit=crop",
-  humidity: "https://images.unsplash.com/photo-1595152452543-2ede7a836cb7?q=80&w=1170&auto=format&fit=crop",
-  soil: "https://images.unsplash.com/photo-1638039414217-d9be9eed3380?q=80&w=1170&auto=format&fit=crop",
-  ph: "https://images.unsplash.com/photo-1504868584860-f757101041e2?q=80&w=1170&auto=format&fit=crop",
-  comparison: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1170&auto=format&fit=crop",
-  watering: "https://images.unsplash.com/photo-1588421357574-87938a86fa28?q=80&w=1170&auto=format&fit=crop",
-};
-
 const Statistics: React.FC = () => {
   const [aggregateData, setAggregateData] = useState<any[]>([]);
   const [compareData, setCompareData] = useState<any[]>([]);
@@ -144,8 +135,6 @@ const Statistics: React.FC = () => {
               color="#9b87f5"
               unit="°C"
               height={240}
-              fallbackImage={CHART_IMAGES.temperature}
-              showFallback={true}
             />
             <ChartCard
               title="7-Day Humidity Trends"
@@ -157,8 +146,6 @@ const Statistics: React.FC = () => {
               chartType="area"
               unit="%"
               height={240}
-              fallbackImage={CHART_IMAGES.humidity}
-              showFallback={true}
             />
           </div>
           
@@ -174,8 +161,6 @@ const Statistics: React.FC = () => {
               chartType="area"
               unit="%"
               height={240}
-              fallbackImage={CHART_IMAGES.soil}
-              showFallback={true}
             />
             <ChartCard
               title="7-Day pH Level Trends"
@@ -186,8 +171,6 @@ const Statistics: React.FC = () => {
               color="#F97316"
               chartType="line"
               height={240}
-              fallbackImage={CHART_IMAGES.ph}
-              showFallback={true}
             />
           </div>
           
@@ -203,8 +186,6 @@ const Statistics: React.FC = () => {
               chartType="bar"
               unit="%"
               height={240}
-              fallbackImage={CHART_IMAGES.comparison}
-              showFallback={true}
             />
             <ChartCard
               title="Watering Events"
@@ -216,8 +197,6 @@ const Statistics: React.FC = () => {
               chartType="bar"
               unit=""
               height={240}
-              fallbackImage={CHART_IMAGES.watering}
-              showFallback={true}
             />
           </div>
         </div>
