@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ResponsiveContainer } from 'recharts';
 import { cn } from '@/lib/utils';
 
@@ -7,7 +7,7 @@ export interface BaseChartCardProps {
   title: string;
   description?: string;
   className?: string;
-  children: React.ReactNode;
+  children: React.ReactElement;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
