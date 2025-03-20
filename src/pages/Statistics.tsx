@@ -1,9 +1,17 @@
-
 import React, { useEffect, useState } from 'react';
 import { channelsData, dummyChannels, usageStats } from '@/lib/data';
 import Navbar from '@/components/Navbar';
 import ChartCard from '@/components/ChartCard';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+const CHART_IMAGES = {
+  temperature: "https://images.unsplash.com/photo-1501621667575-af81f1f0bacc?q=80&w=1170&auto=format&fit=crop",
+  humidity: "https://images.unsplash.com/photo-1595152452543-2ede7a836cb7?q=80&w=1170&auto=format&fit=crop",
+  soil: "https://images.unsplash.com/photo-1638039414217-d9be9eed3380?q=80&w=1170&auto=format&fit=crop",
+  ph: "https://images.unsplash.com/photo-1504868584860-f757101041e2?q=80&w=1170&auto=format&fit=crop",
+  comparison: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1170&auto=format&fit=crop",
+  watering: "https://images.unsplash.com/photo-1588421357574-87938a86fa28?q=80&w=1170&auto=format&fit=crop",
+};
 
 const Statistics: React.FC = () => {
   const [aggregateData, setAggregateData] = useState<any[]>([]);
@@ -80,7 +88,7 @@ const Statistics: React.FC = () => {
     
     prepareChartData();
   }, []);
-
+  
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navbar */}
@@ -88,121 +96,131 @@ const Statistics: React.FC = () => {
       
       {/* Main content */}
       <div className="md:pl-64 flex-1 overflow-auto">
-        <ScrollArea className="h-[calc(100vh-56px)]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            {/* Header */}
-            <div className="mb-6 animate-fade-in">
-              <h1 className="text-2xl font-bold text-gray-900">Statistics</h1>
-              <p className="mt-1 text-sm text-gray-500">
-                View comprehensive statistics and trends from all your crop channels
-              </p>
-            </div>
-            
-            {/* Usage stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 animate-slide-up">
-              <StatCard
-                title="Total Channels"
-                value={dummyChannels.length.toString()}
-                description="Active crop monitoring channels"
-                trend="up"
-                trendValue="+2 this month"
-                iconType="channels"
-              />
-              <StatCard
-                title="Water Events"
-                value={usageStats.watering.thisMonth.toString()}
-                description="Irrigation events this month"
-                trend="up"
-                trendValue={`+${usageStats.watering.today} today`}
-                iconType="watering"
-              />
-              <StatCard
-                title="Sensor Readings"
-                value={usageStats.readings.thisMonth.toString()}
-                description="Total readings collected this month"
-                trend="up"
-                trendValue={`+${usageStats.readings.today} today`}
-                iconType="readings"
-              />
-            </div>
-            
-            {/* Charts - Row 1 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <ChartCard
-                title="7-Day Temperature Trends"
-                description="Average temperatures across all channels"
-                data={aggregateData}
-                dataKey="temperature"
-                xAxisDataKey="date"
-                color="#9b87f5"
-                unit="°C"
-                height={180}
-              />
-              <ChartCard
-                title="7-Day Humidity Trends"
-                description="Average humidity across all channels"
-                data={aggregateData}
-                dataKey="humidity"
-                xAxisDataKey="date"
-                color="#0EA5E9"
-                chartType="area"
-                unit="%"
-                height={180}
-              />
-            </div>
-            
-            {/* Charts - Row 2 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <ChartCard
-                title="7-Day Soil Moisture Trends"
-                description="Average soil moisture across all channels"
-                data={aggregateData}
-                dataKey="soilMoisture"
-                xAxisDataKey="date"
-                color="#10B981"
-                chartType="area"
-                unit="%"
-                height={180}
-              />
-              <ChartCard
-                title="7-Day pH Level Trends"
-                description="Average pH levels across all channels"
-                data={aggregateData}
-                dataKey="ph"
-                xAxisDataKey="date"
-                color="#F97316"
-                chartType="line"
-                height={180}
-              />
-            </div>
-            
-            {/* Charts - Row 3 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <ChartCard
-                title="Channel Comparison"
-                description="Current soil moisture levels by channel"
-                data={compareData}
-                dataKey="soilMoisture"
-                xAxisDataKey="name"
-                color="#D946EF"
-                chartType="bar"
-                unit="%"
-                height={180}
-              />
-              <ChartCard
-                title="Watering Events"
-                description="Number of irrigation events by day"
-                data={wateringData}
-                dataKey="count"
-                xAxisDataKey="name"
-                color="#8B5CF6"
-                chartType="bar"
-                unit=""
-                height={180}
-              />
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          {/* Header */}
+          <div className="mb-6 animate-fade-in">
+            <h1 className="text-2xl font-bold text-gray-900">Statistics</h1>
+            <p className="mt-1 text-sm text-gray-500">
+              View comprehensive statistics and trends from all your crop channels
+            </p>
           </div>
-        </ScrollArea>
+          
+          {/* Usage stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 animate-slide-up">
+            <StatCard
+              title="Total Channels"
+              value={dummyChannels.length.toString()}
+              description="Active crop monitoring channels"
+              trend="up"
+              trendValue="+2 this month"
+              iconType="channels"
+            />
+            <StatCard
+              title="Water Events"
+              value={usageStats.watering.thisMonth.toString()}
+              description="Irrigation events this month"
+              trend="up"
+              trendValue={`+${usageStats.watering.today} today`}
+              iconType="watering"
+            />
+            <StatCard
+              title="Sensor Readings"
+              value={usageStats.readings.thisMonth.toString()}
+              description="Total readings collected this month"
+              trend="up"
+              trendValue={`+${usageStats.readings.today} today`}
+              iconType="readings"
+            />
+          </div>
+          
+          {/* Charts - Row 1 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <ChartCard
+              title="7-Day Temperature Trends"
+              description="Average temperatures across all channels"
+              data={aggregateData}
+              dataKey="temperature"
+              xAxisDataKey="date"
+              color="#9b87f5"
+              unit="°C"
+              height={240}
+              fallbackImage={CHART_IMAGES.temperature}
+              showFallback={true}
+            />
+            <ChartCard
+              title="7-Day Humidity Trends"
+              description="Average humidity across all channels"
+              data={aggregateData}
+              dataKey="humidity"
+              xAxisDataKey="date"
+              color="#0EA5E9"
+              chartType="area"
+              unit="%"
+              height={240}
+              fallbackImage={CHART_IMAGES.humidity}
+              showFallback={true}
+            />
+          </div>
+          
+          {/* Charts - Row 2 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <ChartCard
+              title="7-Day Soil Moisture Trends"
+              description="Average soil moisture across all channels"
+              data={aggregateData}
+              dataKey="soilMoisture"
+              xAxisDataKey="date"
+              color="#10B981"
+              chartType="area"
+              unit="%"
+              height={240}
+              fallbackImage={CHART_IMAGES.soil}
+              showFallback={true}
+            />
+            <ChartCard
+              title="7-Day pH Level Trends"
+              description="Average pH levels across all channels"
+              data={aggregateData}
+              dataKey="ph"
+              xAxisDataKey="date"
+              color="#F97316"
+              chartType="line"
+              height={240}
+              fallbackImage={CHART_IMAGES.ph}
+              showFallback={true}
+            />
+          </div>
+          
+          {/* Charts - Row 3 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <ChartCard
+              title="Channel Comparison"
+              description="Current soil moisture levels by channel"
+              data={compareData}
+              dataKey="soilMoisture"
+              xAxisDataKey="name"
+              color="#D946EF"
+              chartType="bar"
+              unit="%"
+              height={240}
+              fallbackImage={CHART_IMAGES.comparison}
+              showFallback={true}
+            />
+            <ChartCard
+              title="Watering Events"
+              description="Number of irrigation events by day"
+              data={wateringData}
+              dataKey="count"
+              xAxisDataKey="name"
+              color="#8B5CF6"
+              chartType="bar"
+              unit=""
+              height={240}
+              fallbackImage={CHART_IMAGES.watering}
+              showFallback={true}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

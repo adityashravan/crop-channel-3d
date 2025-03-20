@@ -16,6 +16,8 @@ interface ChartCardProps {
   chartType?: 'line' | 'area' | 'bar';
   unit?: string;
   height?: string | number;
+  fallbackImage?: string;
+  showFallback?: boolean;
 }
 
 const ChartCard: React.FC<ChartCardProps> = ({
@@ -29,6 +31,8 @@ const ChartCard: React.FC<ChartCardProps> = ({
   chartType = 'line',
   unit = '',
   height = '56',
+  fallbackImage,
+  showFallback = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -62,6 +66,8 @@ const ChartCard: React.FC<ChartCardProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       height={height}
+      fallbackImage={fallbackImage}
+      showFallback={showFallback}
     >
       {renderChart()}
     </BaseChartCard>

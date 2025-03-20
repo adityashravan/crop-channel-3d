@@ -11,6 +11,8 @@ export interface BaseChartCardProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   height?: string | number;
+  fallbackImage?: string;
+  showFallback?: boolean;
 }
 
 const BaseChartCard: React.FC<BaseChartCardProps> = ({
@@ -21,6 +23,8 @@ const BaseChartCard: React.FC<BaseChartCardProps> = ({
   onMouseEnter,
   onMouseLeave,
   height = '56',
+  fallbackImage,
+  showFallback = false,
 }) => {
   return (
     <div
@@ -37,11 +41,23 @@ const BaseChartCard: React.FC<BaseChartCardProps> = ({
         {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
       </div>
       
-      <div className={`px-1 h-${typeof height === 'string' ? height : ''}`} style={typeof height !== 'string' ? { height: `${height}px` } : {}}>
-        <ResponsiveContainer width="100%" height="100%">
-          {children}
-        </ResponsiveContainer>
-      </div>
+      {showFallback && fallbackImage ? (
+        <div className={`px-1 h-${typeof height === 'string' ? height : ''}`} 
+             style={typeof height !== 'string' ? { height: `${height}px` } : {}}>
+          <img 
+            src={fallbackImage} 
+            alt={title} 
+            className="w-full h-full object-cover" 
+          />
+        </div>
+      ) : (
+        <div className={`px-1 h-${typeof height === 'string' ? height : ''}`} 
+             style={typeof height !== 'string' ? { height: `${height}px` } : {}}>
+          <ResponsiveContainer width="100%" height="100%">
+            {children}
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 };
