@@ -15,6 +15,7 @@ interface ChartCardProps {
   className?: string;
   chartType?: 'line' | 'area' | 'bar';
   unit?: string;
+  height?: string | number;
 }
 
 const ChartCard: React.FC<ChartCardProps> = ({
@@ -27,6 +28,7 @@ const ChartCard: React.FC<ChartCardProps> = ({
   className,
   chartType = 'line',
   unit = '',
+  height = '56',
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -59,6 +61,7 @@ const ChartCard: React.FC<ChartCardProps> = ({
       className={className}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      height={height}
     >
       {renderChart()}
     </BaseChartCard>
